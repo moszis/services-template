@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+   <datasource jta="true" enabled="true" jndi-name="java:/jdbc/testDS"  pool-name="testPool">
+       <!-- "mysql" driver registration must happen within the jboss server. -->
+       <!-- 1. add module -->
+       <!-- 2. add driver config to standalone.xml -->
+       <driver>mysql</driver>
+       <connection-url>jdbc:mysql://127.0.0.1:3306/hibernate_test</connection-url>
+       <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
+       <security>
+           <password>mosmos12</password>
+           <user-name>root</user-name>
+       </security>
+   </datasource>
+</datasources>
