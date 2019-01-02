@@ -1,0 +1,36 @@
+
+Project Setup:
+
+************************
+1. Install Wildfly 14 server: http://wildfly.org/downloads/
+
+#Setup MySQL driver#
+
+2. Download mysql java connector: https://dev.mysql.com/downloads/connector/j/
+
+3. Create folder: WILDFLY_HOME\modules\system\layers\base\com\mysql\main
+
+4. Create module.xml file
+
+5. module.xml content (Change connector version if necessary):
+   ******************************************
+		<module xmlns="urn:jboss:module:1.5" name="com.mysql">
+		    <resources>
+		        <resource-root path="mysql-connector-java-8.0.13.jar" />
+		    </resources>
+		    <dependencies>
+		        <module name="javax.api"/>
+		        <module name="javax.transaction.api"/>
+		    </dependencies>
+		</module>
+   ******************************************
+ 
+ 6. copy mysql-connector-java-8.0.13.jar file into this main folder
+ 
+ 7. Add the following into wildfly standalone.xml under <datasources><drivers> section
+ 	*****************************************
+        <driver name="mysql" module="com.mysql">
+			 <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
+			 <xa-datasource-class>com.mysql.cj.jdbc.MysqlXADataSource</xa-datasource-class>
+		</driver>
+ 	*****************************************
