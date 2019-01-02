@@ -34,3 +34,11 @@ Project Setup:
 			 <xa-datasource-class>com.mysql.cj.jdbc.MysqlXADataSource</xa-datasource-class>
 		</driver>
  	*****************************************
+ 	
+ 8. May need to set JDK 1.8.x as default execution environment in eclipse
+    Window/Preferences -> Java/Installed JREs/Execution Environments -> JavaSE-1.8 -> select JDK
+    If JDK option is not available, need to add it in Installed JREs; just browse to jdk installation folder
+    
+ 9. May need to check and configure JPA in project facets (2.1)
+ 
+ 10. While at it set Dynamic Web Module to 4.0 (may not be needed).
