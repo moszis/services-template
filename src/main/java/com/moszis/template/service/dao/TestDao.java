@@ -1,28 +1,28 @@
 package com.moszis.template.service.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.moszis.template.service.core.DAO;
 import com.moszis.template.service.entity.TestEntity;
 
 @Stateless
-public class TestDao {
+public class TestDao extends DAO<TestEntity> {
 
 	private static Log log = LogFactory.getLog(TestDao.class);
 	
-    @PersistenceContext(unitName = "testjpa")
-    protected EntityManager entityManager;
+	public TestDao() {
+		super(TestEntity.class);
+	}
 
-    
-	public TestEntity getTest(Long testId){
+	public TestEntity getTest(UUID testId){
 
 	   	try{
 	   	
@@ -37,8 +37,7 @@ public class TestDao {
 		}catch (NoResultException nre){
 			return null;
 		}catch (Exception e){
-		    log.error("getPaymentApproval(UUID paymentApprovalId) : Unable to retrieve PaymentApproval by ID: "+testId
-		    		+", error: ", e);
+		    log.error("getPaymentApproval(UUID paymentApprovalId) : Unable to retrieve PaymentApproval by ID: "+testId+", error: ", e);
 		    throw new RuntimeException(e);
 		}
 
