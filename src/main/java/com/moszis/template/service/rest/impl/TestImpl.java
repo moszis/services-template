@@ -7,13 +7,10 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.Response;
 
 import com.moszis.template.service.core.exceptions.EntityNotFoundException;
-import com.moszis.template.service.core.exceptions.InvalidDataException;
 import com.moszis.template.service.core.util.LocalContext;
 import com.moszis.template.service.core.util.StandardResponseBuilder;
 import com.moszis.template.service.core.util.StandardValidationHelper;
-import com.moszis.template.service.dao.TestDao;
 import com.moszis.template.service.dto.Test;
-import com.moszis.template.service.entity.TestEntity;
 import com.moszis.template.service.rest.api.TestService;
 import com.moszis.template.service.services.TestBusinessService;
 
@@ -26,8 +23,6 @@ public class TestImpl implements TestService {
     
     @Override
     public Response getTestData(String testId) {
-
-    	System.out.println("*****Test ****"+testId);
 
 		final StandardValidationHelper validationHelper = LocalContext.getValidationContext();
 		
@@ -46,9 +41,6 @@ public class TestImpl implements TestService {
     @Override
     public Response getTestData() {
 
-    	System.out.println("*****getTestData() ****");
-
-        
 		final StandardValidationHelper validationHelper = LocalContext.getValidationContext();
 		
 		try {
@@ -65,7 +57,31 @@ public class TestImpl implements TestService {
 
 	@Override
 	public Response createTestData(Test test) {
-		// TODO Auto-generated method stub
-		return null;
+
+		final StandardValidationHelper validationHelper = LocalContext.getValidationContext();
+		
+		try {
+			Test result = testBusinessService.createTest(test);
+	    	return Response.status(Response.Status.OK.getStatusCode()).entity(result).build();
+		} catch (Exception e) {
+			return validationHelper.hasErrors() ? StandardResponseBuilder.validationError(validationHelper.getValidationErrors()):
+				StandardResponseBuilder.resourceNotFound("Test could not be created");
+		}
+		
+	}
+	
+	@Override
+	public Response updateTestData(String testId, Test test) {
+
+		final StandardValidationHelper validationHelper = LocalContext.getValidationContext();
+		
+		try {
+			Test result = testBusinessService.updateTest(testId, test);
+	    	return Response.status(Response.Status.OK.getStatusCode()).entity(result).build();
+		} catch (Exception e) {
+			return validationHelper.hasErrors() ? StandardResponseBuilder.validationError(validationHelper.getValidationErrors()):
+				StandardResponseBuilder.resourceNotFound("Test could not be created");
+		}
+		
 	}
 }

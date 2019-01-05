@@ -9,10 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+
 
 import com.moszis.template.service.core.EntityBase;
 import com.moszis.template.service.core.ITransformable;
@@ -34,17 +33,15 @@ import com.moszis.template.service.dto.Test;
 })
 
 @Entity
-@Table(name = "TEST" , schema = "HIBERNATE_TEST")
+@Table(name = "TEST")
 public class TestEntity  extends EntityBase  implements ITransformable<Test>{ 
 
 	private static final long serialVersionUID = 2968353361253859616L;
-
+	
 	@Id
-	@Type(type = "uuid-binary")
-	@GeneratedValue(generator = "myGUID")
-	@GenericGenerator(name = "myGUID", strategy = "uuid2")
-	@Column(name = "ADDRESS_ID", length = 16, unique = true)
-	@NotNull
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	@GeneratedValue(generator = "UUID")
+	@Column(name = "test_id", updatable = false, nullable = false)
 	private UUID id;
 	
 	@Column(name = "test_name")
@@ -108,7 +105,8 @@ public class TestEntity  extends EntityBase  implements ITransformable<Test>{
 
 		Test target = new Test();
 		target.setId(StringUtil.uuidToString(this.getId()));
-		return null;
+		target.setName(this.getName());
+		return target;
 	}
 
 }

@@ -3,10 +3,8 @@ package com.moszis.template.service.core.util;
 import com.moszis.template.service.core.security.AccessToken;
 
 public class LocalContext {
-	/**
-	 * The constant PLAYBOOK_SYSTEM_USER_NAME.
-	 */
-	public static final String PLAYBOOK_SYSTEM_USER_NAME = "Playbook Services";
+
+	public static final String SYSTEM_USER_NAME = "Test Services";
 
 	private static final ThreadLocal<AccessToken> authContext = new ThreadLocal<>();
 	private static final ThreadLocal<WebParamsQuery> webParamsQueryContext = new ThreadLocal<>();
@@ -20,7 +18,7 @@ public class LocalContext {
 	public static AccessToken getAuthContext() {
 		if (authContext.get() == null) {
 			AccessToken token = new AccessToken();
-			token.setUsername(PLAYBOOK_SYSTEM_USER_NAME);
+			token.setUsername(SYSTEM_USER_NAME);
 
 			authContext.set(token);
 		}

@@ -132,6 +132,62 @@ public class TestBusinessService {
 	}
 	
 	
+	public Test createTest(Test test) {
+	
+		validateForCreate(test);
+		
+		//TODO: Check for errors
+		//TODO: Set defaults
+		//TODO: Check for errors
+		
+		TestEntity testEntity = createTestEntity(test);
+		
+		
+		return testEntity.toDTO();
+	}
+	
+	public void validateForCreate(Test test) {
+		
+		final StandardValidationHelper validationHelper = LocalContext.getValidationContext();
+		
+		validationHelper.exceedsMaximumChars("Test Name", test.getName(), 45);
+	}
+	
+	
+	public Test updateTest(String testId, Test test) throws InvalidDataException, EntityNotFoundException {
+		
+		//validateForUpdate(test);
+		//TODO: Check for errors
+		//TODO: Set defaults
+		//TODO: Check for errors
+		
+		TestEntity testEntity = getTestEntity(testId);
+		
+		updateTestEntity(testEntity, test);
+		
+		
+		return testEntity.toDTO();
+	}
+	
+	
+	public TestEntity createTestEntity(Test test) {
+		
+		TestEntity testEntity = new TestEntity();
+		testEntity.setName(test.getName());
+
+		testDao.persist(testEntity);
+
+		return testEntity;
+	}
+	
+	
+	public void updateTestEntity(TestEntity testEntity, Test test) {
+		
+		testEntity.setName(test.getName());
+
+		testDao.persist(testEntity);
+	}
+	
 	private TestEntity getEntity(UUID uuid){
 		return testDao.getTest(uuid);
 	}
